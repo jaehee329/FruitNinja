@@ -25,9 +25,19 @@ def hand():
 
 
 
-	return hand
+	return {"hand_coor": hand_coor(hand), "hand_type": hand_type(hand)}
 
 
+def hand_coor(hand):
+	x = 0
+	y = 0
+	z = 0
+	for p in hand:
+		x += p.x
+		y += p.y
+		z += p.z
+	l = len(hand)
+	return [x/l, y/l, z/l]
 
 def hand_type(hand):
 	return 0
