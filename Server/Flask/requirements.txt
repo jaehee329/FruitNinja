@@ -1,0 +1,3 @@
+flask==2.2.2
+flask_redis==0.4.0
+
