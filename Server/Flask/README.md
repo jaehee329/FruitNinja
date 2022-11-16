@@ -1,4 +1,4 @@
-# overview
+## overview
 
 server url: localhost:5000
 redis url:  localhost:6379
@@ -7,7 +7,7 @@ redis url:  localhost:6379
   * returns latest hand coordinates as dict(json) format
 
 
-# redis data structure
+## redis data structure
 client['hand'] = { "0": [x,y,z], ... } # 21 data points
 
 
