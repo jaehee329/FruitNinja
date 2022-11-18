@@ -5,7 +5,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    static bool isPlaying = false;
+    public static bool isPlaying = false;
     public static bool isSliceMode = true;
     public TMP_Text mode;
 

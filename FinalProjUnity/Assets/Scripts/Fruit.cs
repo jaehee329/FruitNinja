@@ -16,9 +16,9 @@ public class Fruit : MonoBehaviour
     {
         fruitRigidBody = GetComponent<Rigidbody>();
         fruitCollider = GetComponent<Collider>();
-        GrabModeScript = gameObject.GetComponent<DragDrop>();
+        //GrabModeScript = gameObject.GetComponent<DragDrop>();
         SliceModeScript = gameObject.GetComponent<Fruit>();
-        GrabModeScript.enabled = false;
+        //GrabModeScript.enabled = false;
         SliceModeScript.enabled = true;
     }
 
@@ -27,13 +27,13 @@ public class Fruit : MonoBehaviour
         if (!GameManager.isSliceMode)
         {
             // Grab mode 일 때
-            GrabModeScript.enabled = true;
+            //GrabModeScript.enabled = true;
             SliceModeScript.enabled = false;
         }
         else
         {
             // Slice mode 일 땡
-            GrabModeScript.enabled = false;
+            //GrabModeScript.enabled = false;
             SliceModeScript.enabled = true;
         }
     }
