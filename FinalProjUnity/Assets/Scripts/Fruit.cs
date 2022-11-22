@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Fruit : MonoBehaviour
 {
@@ -33,7 +34,6 @@ public class Fruit : MonoBehaviour
         else
         {
             // Slice mode 일 땡
-            //GrabModeScript.enabled = false;
             SliceModeScript.enabled = true;
         }
     }
@@ -62,6 +62,15 @@ public class Fruit : MonoBehaviour
         {
             Slice slice = other.GetComponent<Slice>();
             Slice(slice.Direction, slice.transform.position, slice.sliceForce);
+            if (SceneManager.GetActiveScene().buildIndex == 0)
+            {
+                Invoke("MoveToHowToScene", 1.5f);
+            }
         }
+    }
+
+    private void MoveToHowToScene()
+    {
+        SceneManager.LoadScene(1);
     }
 }
