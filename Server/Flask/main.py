@@ -89,7 +89,7 @@ def hand_type(hand):
 	print(np.linalg.norm(v2)**2)
 	print(np.linalg.norm(v3)**2)
 
-	return 0 if offset < 1.5 else 1
+	return 0 if offset < 2 else 1
 
 
 
