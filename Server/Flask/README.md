@@ -1,9 +1,9 @@
 ## overview
 
-server url: localhost:5000
+server url: localhost:8000
 redis url:  localhost:6379
 
-1. GET localhost:5000/hand
+1. GET localhost:8000/hand
   * returns latest hand coordinates as dict(json) format
 
 
