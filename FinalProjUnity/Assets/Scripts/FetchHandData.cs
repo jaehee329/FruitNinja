@@ -46,8 +46,7 @@ public class FetchHandData : MonoBehaviour
                 handPos.x = (float)Convert.ToDouble(handCoord[0]);
                 handPos.y = (float)Convert.ToDouble(handCoord[1]);
                 resize();
-                handPos = Camera.main.ScreenToWorldPoint(handPos);
-                handPos.z = 0f;
+                handPos = Camera.main.ScreenToWorldPoint(new Vector3(handPos.x, handPos.y, 20));
             }
         }
         yield return new WaitForSeconds(1/frequency);
