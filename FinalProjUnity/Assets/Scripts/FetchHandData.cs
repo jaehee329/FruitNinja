@@ -1,3 +1,4 @@
+// Fetch hand position from server, transform to (Orthgraphical)camera-space coordinate
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,13 +9,12 @@ using MiniJSON;
 public class FetchHandData : MonoBehaviour
 {
     public float frequency = 10f;
-    public double handX;
-    public double handY;
-    public double handZ;
+    public Vector3 handPos;
     public int handType;
     private string URI = "http://localhost:8000/hand";
-    // private string URI = "http://localhost:8000/";
     private bool isDelay;
+    private float height = 1920f;
+    private float width = 1080f;
 
     void Start()
     {
@@ -42,14 +42,21 @@ public class FetchHandData : MonoBehaviour
             else
             {
                 Debug.Log("Get Request Success");
-                Dictionary<string, object> response = Json.Deserialize(request.downloadHandler.text) as Dictionary<string, object>;
-
-                handX  = Convert.ToDouble(((List<object>) response["hand_coor"])[0]);
-                handY  = Convert.ToDouble(((List<object>) response["hand_coor"])[1]);
-                handZ  = Convert.ToDouble(((List<object>) response["hand_coor"])[2]);
+                List<object> handCoord = (List<object>) (Json.Deserialize(request.downloadHandler.text) as Dictionary<string, object>)["hand_coor"];
+                handPos.x = (float)Convert.ToDouble(handCoord[0]);
+                handPos.y = (float)Convert.ToDouble(handCoord[1]);
+                resize();
+                handPos = Camera.main.ScreenToWorldPoint(handPos);
+                handPos.z = 0f;
             }
         }
         yield return new WaitForSeconds(1/frequency);
         isDelay = false;
+    }
+    
+    private void resize() {
+        handPos.x = height * (1-handPos.x);
+        handPos.y = width * (1-handPos.y);
+        // Debug.Log("resized handPos x = " + handPos.x + " y = " + handPos.y);
     }
 }
