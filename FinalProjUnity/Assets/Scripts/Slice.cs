@@ -13,6 +13,13 @@ public class Slice : MonoBehaviour
     public Vector3 Direction { get; private set; }
     public float sliceForce = 5f;
 
+    private FetchHandData handDataScript;
+
+    void Start()
+    {
+        handDataScript = GameObject.Find("GameManager").GetComponent<FetchHandData>();
+    }
+
     private void Awake()
     {
         sliceCollider = GetComponent<Collider>();
@@ -32,31 +39,51 @@ public class Slice : MonoBehaviour
 
     void Update()
     {
+        // Hand Mode
         if (GameManager.isSliceMode)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (true)
             {
                 StartSlicing();
             }
-            else if (Input.GetMouseButtonUp(0))
-            {
-                StopSlicing();
-            }
-            else if (isSlicing)
+            // StopSlicing doesn't happen
+            if (isSlicing)
             {
                 ContinueSlicing();
             }
         }
+
+        // Mouse Mode
+        // if (GameManager.isSliceMode)
+        // {
+        //     if (Input.GetMouseButtonDown(0))
+        //     {
+        //         StartSlicing();
+        //     }
+        //     else if (Input.GetMouseButtonUp(0))
+        //     {
+        //         StopSlicing();
+        //     }
+        //     else if (isSlicing)
+        //     {
+        //         ContinueSlicing();
+        //     }
+        // }
     }
 
     private void StartSlicing()
     {
         Debug.Log("start slicing");
-        Vector3 newPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        newPos.z = 0f;
-        Debug.Log(newPos.ToString());
+        // Hand Mode
+        transform.position = handDataScript.handPos;
+        Debug.Log("Slice.cs handPos = " + handDataScript.handPos);
 
-        transform.position = newPos;
+        // Mouse Mode
+        // Vector3 newPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        // newPos.z = 0f;
+        // Debug.Log(newPos.ToString());
+        // transform.position = newPos;
+        
 
         isSlicing = true;
         sliceCollider.enabled = true;
@@ -74,23 +101,12 @@ public class Slice : MonoBehaviour
 
     private void ContinueSlicing()
     {
-        //Vector3 mp;
-        //Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        //if (Physics.Raycast(ray, out RaycastHit raycastHit))
-        //{
-
-        //    mp = raycastHit.point;
-        //    mp.z = -1f;
-        //    Direction = mp - transform.position;
-
-        //    float velocity = Direction.magnitude / Time.deltaTime;
-        //    sliceCollider.enabled = velocity > minSliceVelocity;
-
-        //    transform.position = mp;
-        //}
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 21f;
-        Vector3 newPos = mainCamera.ScreenToWorldPoint(mousePos);
+        // Hand Mode
+        Vector3 newPos = handDataScript.handPos;
+        // Mouse Mode
+        // Vector3 mousePos = Input.mousePosition;
+        // mousePos.z = 21f;
+        // Vector3 newPos = mainCamera.ScreenToWorldPoint(mousePos);
         Direction = newPos - transform.position;
         Debug.Log(Direction.ToString());
 
@@ -98,7 +114,5 @@ public class Slice : MonoBehaviour
         sliceCollider.enabled = velocity > minSliceVelocity;
 
         transform.position = newPos;
-
-
     }
 }
