@@ -47,7 +47,7 @@ with mp_hands.Hands(
     # to redis
     if results.multi_hand_landmarks:
       for hand_landmarks in results.multi_hand_landmarks:
-        print("\n\n\n ######################## \n\n\n")
+        # print("\n\n\n ######################## \n\n\n")
         hand_dict = {}
         for i,p in enumerate(hand_landmarks.landmark):
           hand_dict[i] = [p.x,p.y,p.z]
@@ -56,8 +56,8 @@ with mp_hands.Hands(
         json_data = json.dumps(hand_dict)
         r.lpush('hand', json_data) # list expire is resetted after every update
         r.pexpire('hand',300)
-        print(json_data)
-        print("\n\n\n @@@@@@@@@@@@@@@@@@@@@@@ \n\n\n")
+        # print(json_data)
+        # print("\n\n\n @@@@@@@@@@@@@@@@@@@@@@@ \n\n\n")
 
 
 
@@ -72,8 +72,11 @@ with mp_hands.Hands(
             mp_hands.HAND_CONNECTIONS,
             mp_drawing_styles.get_default_hand_landmarks_style(),
             mp_drawing_styles.get_default_hand_connections_style())
+
+
     # Flip the image horizontally for a selfie-view display.
     cv2.imshow('MediaPipe Hands', cv2.flip(image, 1))
+    
     if cv2.waitKey(5) & 0xFF == 27:
       break
 cap.release()
