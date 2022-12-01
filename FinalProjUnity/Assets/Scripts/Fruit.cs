@@ -67,6 +67,26 @@ public class Fruit : MonoBehaviour
                 Invoke("MoveToHowToScene", 1.5f);
             }
         }
+
+        if (other.CompareTag("DropArea"))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.forward, out hit))
+            {
+                Debug.Log("Point of contact: " + hit.point);
+                Slice(new Vector3(0, -1, 0), hit.point, 4f);
+                Destroy(this.gameObject, 3f);
+            }
+        }
+        if (other.CompareTag("grab"))
+        {
+            if (!GameManager.isSliceMode)
+            {
+                Debug.Log("Grab mode + grab object has grabbed the fruit");
+                // update fruit position according to the grab object's position
+            }
+        }
+            
     }
 
     private void MoveToHowToScene()
