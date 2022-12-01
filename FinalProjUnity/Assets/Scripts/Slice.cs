@@ -6,7 +6,7 @@ public class Slice : MonoBehaviour
 {
     public Camera mainCamera;
     private Collider sliceCollider;
-    private TrailRenderer sliceTrail;
+    public TrailRenderer sliceTrail;
     private bool isSlicing;
     public float minSliceVelocity = 0.01f;
 
@@ -15,16 +15,11 @@ public class Slice : MonoBehaviour
 
     private FetchHandData handDataScript;
 
-    void Start()
-    {
-        handDataScript = GameObject.Find("GameManager").GetComponent<FetchHandData>();
-    }
-
     private void Awake()
     {
+        handDataScript = GameObject.Find("GameManager").GetComponent<FetchHandData>();
         sliceCollider = GetComponent<Collider>();
         Debug.Log(sliceCollider.enabled);
-        sliceTrail = GetComponentInChildren<TrailRenderer>();
     }
 
     private void OnEnable()
@@ -73,10 +68,10 @@ public class Slice : MonoBehaviour
 
     private void StartSlicing()
     {
-        Debug.Log("start slicing");
+        //Debug.Log("start slicing");
         // Hand Mode
         transform.position = handDataScript.handPos;
-        Debug.Log("Slice.cs handPos = " + handDataScript.handPos);
+        //Debug.Log("Slice.cs handPos = " + handDataScript.handPos);
 
         // Mouse Mode
         // Vector3 newPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -88,7 +83,7 @@ public class Slice : MonoBehaviour
         isSlicing = true;
         sliceCollider.enabled = true;
         sliceTrail.enabled = true;
-        sliceTrail.Clear();
+        //sliceTrail.Clear();
     }
 
     private void StopSlicing()
@@ -108,7 +103,7 @@ public class Slice : MonoBehaviour
         // mousePos.z = 21f;
         // Vector3 newPos = mainCamera.ScreenToWorldPoint(mousePos);
         Direction = newPos - transform.position;
-        Debug.Log(Direction.ToString());
+        //Debug.Log(Direction.ToString());
 
         float velocity = Direction.magnitude / Time.deltaTime;
         sliceCollider.enabled = velocity > minSliceVelocity;

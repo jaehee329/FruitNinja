@@ -9,6 +9,7 @@ TagManager:
   - fruit
   - slice
   - DropArea
+  - grab
   layers:
   - Default
   - TransparentFX

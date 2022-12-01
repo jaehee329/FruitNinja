@@ -36,8 +36,8 @@ public class FetchHandData : MonoBehaviour
             yield return request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
             {
-                Debug.Log("Get Request Failure");
-                Debug.Log(request.error);
+                //Debug.Log("Get Request Failure");
+                //Debug.Log(request.error);
             }
             else
             {
