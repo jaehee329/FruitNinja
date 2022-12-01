@@ -10,7 +10,10 @@ redis url:  localhost:6379
 ## redis data structure
 client['hand'] = { "0": [x,y,z], ... } # 21 data points
 
+performance: ~15 data per second
 
+
+---
 
 # HOW TO RUN
 

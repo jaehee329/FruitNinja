@@ -4,9 +4,16 @@ import json
 import redis
 import cv2
 import mediapipe as mp
+import time
 
 
 r = redis.Redis(host='localhost', port=6379, db=0)
+r.flushdb() # delete all keys
+r.lpush('hand', json.dumps({'init': 0}))
+if r.pexpire('hand',3000): # 300 millisec
+  print("TIME OUT SET")
+else:
+  print("TIME OUT NOT SET")
 
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
@@ -17,7 +24,7 @@ mp_hands = mp.solutions.hands
 # For webcam input:
 cap = cv2.VideoCapture(0)
 with mp_hands.Hands(
-    model_complexity=0,
+    model_complexity=1,
     min_detection_confidence=0.5,
     min_tracking_confidence=0.7) as hands:
   while cap.isOpened():
@@ -41,18 +48,14 @@ with mp_hands.Hands(
     if results.multi_hand_landmarks:
       for hand_landmarks in results.multi_hand_landmarks:
         print("\n\n\n ######################## \n\n\n")
-        # print(hand_landmarks.landmark)
         hand_dict = {}
         for i,p in enumerate(hand_landmarks.landmark):
           hand_dict[i] = [p.x,p.y,p.z]
 
-
-        # for p in hand_landmarks:
-        #   print(p.x,p.y,p.z)
-        #   print('^^^^^^')
         print(hand_dict)
         json_data = json.dumps(hand_dict)
-        r.set('hand', json_data)
+        r.lpush('hand', json_data) # list expire is resetted after every update
+        r.pexpire('hand',300)
         print(json_data)
         print("\n\n\n @@@@@@@@@@@@@@@@@@@@@@@ \n\n\n")
 

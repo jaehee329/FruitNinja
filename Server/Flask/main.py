@@ -5,33 +5,59 @@ import json
 import ast
 import numpy as np
 
+
+
+HAND_AVG_NUM = 3 # num of hand data to take average on (>=1)
 REDIS_URL = "redis://:password@localhost:6379/0"
 
+
 app = Flask("__main__")
+cors = CORS(app)
 redis_client = FlaskRedis(app)
 
 
-cors = CORS(app)
 
-
-
-
+# [GET /]
 @app.route("/")
 @cross_origin()
 def home():
 	return "home"
 
+
+# [GET /hand]
 @app.route("/hand")
 @cross_origin()
 def hand():
-	res = redis_client.get('hand')
-	res = ast.literal_eval(res.decode("UTF-8"))
-	hand = {}
-	for k,v in res.items():
-		hand[int(k)] = [float(v[0]),float(v[1]),float(v[2])]
+	res = redis_client.lrange('hand',0,HAND_AVG_NUM-1)
 
-	return {"hand_coor": hand_coor(hand), "hand_type": hand_type(hand)}
+	hand_avg = {}
+	if (res):
+		for i in range(21):
+			x = 0
+			y = 0
+			z = 0
+			# ast.literal_eval(res.decode("UTF-8"))
+			for j,_ in enumerate(res):
+				x += ast.literal_eval(res[j].decode("UTF-8"))[str(i)][0]
+				y += ast.literal_eval(res[j].decode("UTF-8"))[str(i)][1]
+				z += ast.literal_eval(res[j].decode("UTF-8"))[str(i)][2]
+			hand_avg[i] = [x/HAND_AVG_NUM, y/HAND_AVG_NUM, z/HAND_AVG_NUM]
+
+	# print(hand_avg)
+
+	hand_coor_val = hand_coor(hand_avg) if hand_avg else [100,100,100]
+	hand_type_val = hand_type(hand_avg) if hand_avg else 0 # default
+	return {"hand_coor": hand_coor_val, "hand_type": hand_type_val}
 	# return hand
+
+
+# [GET /hand_data_num]
+@app.route("/hand_data_num")
+@cross_origin()
+def hand_data_num():
+	res = redis_client.lrange('hand',0,-1)
+	return str(len(res))
+
 
 
 def hand_coor(hand):
