@@ -15,6 +15,7 @@ public class StartPlay : MonoBehaviour
 
     private void Play()
     {
+        GameObject.FindGameObjectWithTag("bgm").GetComponent<AudioSource>().Stop();
         SceneManager.LoadScene(2);
     }
 }

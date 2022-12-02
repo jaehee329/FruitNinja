@@ -23,16 +23,21 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Awake");
+        chance = 3;
+        collectedBomb = 0;
         explosion.SetActive(false);
         GameOverModal.SetActive(false);
+        isPlaying = true;
+        isGameOver = false;
+        isSliceMode = true;
+        handDataScript = this.gameObject.GetComponent<FetchHandData>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        isPlaying = true;
-        isGameOver = false;
-        handDataScript = this.gameObject.GetComponent<FetchHandData>();
+        Time.timeScale = 1;
     }
 
     // Update is called once per frame
@@ -100,7 +105,8 @@ public class GameManager : MonoBehaviour
     {
         // 폭발 효과
         explosion.SetActive(true);
-        StartCoroutine(DelayTimeAndEndGame(2));
+        GetComponent<AudioSource>().Play();
+        StartCoroutine(DelayTimeAndEndGame(1));
         Debug.Log("Game Over");
     }
 
@@ -110,8 +116,10 @@ public class GameManager : MonoBehaviour
         StopGameWithGameOverModal();
     }
 
-    private void StopGameWithGameOverModal()
+    public void StopGameWithGameOverModal()
     {
+        MuteBomb();
+        isPlaying = false;
         GameOverModal.SetActive(true);
         Time.timeScale = 0;
     }
@@ -131,6 +139,15 @@ public class GameManager : MonoBehaviour
             default:
                 break;
                 
+        }
+    }
+
+    private void MuteBomb()
+    {
+        GameObject[] bombs = GameObject.FindGameObjectsWithTag("bomb");
+        foreach (GameObject bomb in bombs)
+        {
+            bomb.GetComponent<AudioSource>().Stop();
         }
     }
 }

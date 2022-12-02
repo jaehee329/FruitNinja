@@ -8,6 +8,7 @@ public class StartSceneFloor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
         watermelon.transform.position = new Vector3(0f, 15f, 0f);
     }
 

@@ -42,8 +42,9 @@ public class GameCommands : MonoBehaviour
 
     private void OnRestart()
     {
-        SceneManager.LoadScene(2);
+        Debug.Log("restart");
         Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     

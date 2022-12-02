@@ -34,6 +34,8 @@ public class Bomb : MonoBehaviour
             if (other.CompareTag("slice"))
             {
                 Debug.Log("slice has touched the bomb");
+                Destroy(this.gameObject);
+                other.GetComponent<AudioSource>().Play();
                 GameManager.isGameOver = true;
             }
 
