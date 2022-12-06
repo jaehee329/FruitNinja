@@ -12,7 +12,9 @@ public class GameManager : MonoBehaviour
     public static bool isGameOver = false;
     public static int chance = 3;
     public static int collectedBomb = 0;
+    private static int score = 0;
 
+    public static TMP_Text scoreObj;
     public TMP_Text mode;
     public GameObject explosion;
     public GameObject GameOverModal;
@@ -20,10 +22,14 @@ public class GameManager : MonoBehaviour
 
     private FetchHandData handDataScript;
     private int curHandType;
+    
+
 
     private void Awake()
     {
         Debug.Log("Awake");
+        score = 0;
+        scoreObj = GameObject.Find("Score").GetComponent<TMP_Text>();
         chance = 3;
         collectedBomb = 0;
         explosion.SetActive(false);
@@ -64,6 +70,7 @@ public class GameManager : MonoBehaviour
             isSliceMode = true;
             mode.text = "Slice";
         } else {
+            Debug.Log("Grab");
             isSliceMode = false;
             mode.text = "Grab";
         }
@@ -129,12 +136,15 @@ public class GameManager : MonoBehaviour
         switch (chance) {
             case 2:
                 failIcons[0].material = null;
+                failIcons[0].GetComponent<AudioSource>().Play();
                 break;
             case 1:
                 failIcons[1].material = null;
+                failIcons[1].GetComponent<AudioSource>().Play();
                 break;
             case 0:
                 failIcons[2].material = null;
+                failIcons[2].GetComponent<AudioSource>().Play();
                 break;
             default:
                 break;
@@ -149,5 +159,11 @@ public class GameManager : MonoBehaviour
         {
             bomb.GetComponent<AudioSource>().Stop();
         }
+    }
+
+    public static void IncreaseScore()
+    {
+        score += 10;
+        scoreObj.text = score.ToString();
     }
 }

@@ -10,6 +10,7 @@ TagManager:
   - slice
   - DropArea
   - grab
+  - bgm
   layers:
   - Default
   - TransparentFX
