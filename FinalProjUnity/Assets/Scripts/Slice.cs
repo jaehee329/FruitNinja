@@ -15,22 +15,22 @@ public class Slice : MonoBehaviour
 
     private FetchHandData handDataScript;
 
-    private void Awake()
+    private void Start()
     {
         handDataScript = GameObject.Find("GameManager").GetComponent<FetchHandData>();
         sliceCollider = GetComponent<Collider>();
         Debug.Log(sliceCollider.enabled);
     }
 
-    private void OnEnable()
-    {
-        StopSlicing();
-    }
+    //private void OnEnable()
+    //{
+    //    StopSlicing();
+    //}
 
-    private void OnDisable()
-    {
-        StopSlicing();
-    }
+    //private void OnDisable()
+    //{
+    //    StopSlicing();
+    //}
 
     void Update()
     {
@@ -46,6 +46,10 @@ public class Slice : MonoBehaviour
             {
                 ContinueSlicing();
             }
+        }
+        else
+        {
+            StopSlicing();
         }
 
         // Mouse Mode

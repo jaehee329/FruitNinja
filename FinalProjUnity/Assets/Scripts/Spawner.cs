@@ -9,15 +9,14 @@ public class Spawner : MonoBehaviour
     public GameObject[] fruitPrefabs;
     public GameObject bombPrefab;
 
-    public float minSpawnDelay = 2f;
-    public float maxSpawnDelay = 3f;
-    public float minBombSpawnDelay = 4f;
-    public float maxBombSpawnDelay = 5f;
+    public float minSpawnDelay;
+    public float maxSpawnDelay;
+    public float minBombSpawnDelay;
+    public float maxBombSpawnDelay;
 
-    public float minDrag = 0;
-    public float maxDrag = 3;
+    public float minDrag;
+    public float maxDrag;
     
-    public float maxLifeTime = 10f;
 
 
     void Awake()
@@ -52,7 +51,6 @@ public class Spawner : MonoBehaviour
 
             GameObject fruit = Instantiate(prefab, pos, Quaternion.identity);
             fruit.GetComponent<Rigidbody>().drag = Random.Range(minDrag, maxDrag);
-            //Destroy(fruit, maxLifeTime);
 
             yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay));
         }
@@ -61,7 +59,7 @@ public class Spawner : MonoBehaviour
     private IEnumerator SpawnBomb()
     {
         // initial delay - enable the below line 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(minBombSpawnDelay);
 
         while (enabled)
         {

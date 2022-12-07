@@ -54,6 +54,8 @@ public class Fruit : MonoBehaviour
             slice.velocity = fruitRigidBody.velocity;
             slice.AddForceAtPosition(direction * force, contactPoint, ForceMode.Impulse);
         }
+        GetComponent<AudioSource>().Play();
+        GameManager.IncreaseScore();
     }
 
     private void OnTriggerEnter(Collider other)

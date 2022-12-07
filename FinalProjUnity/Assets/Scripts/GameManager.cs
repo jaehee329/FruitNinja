@@ -12,7 +12,9 @@ public class GameManager : MonoBehaviour
     public static bool isGameOver = false;
     public static int chance = 3;
     public static int collectedBomb = 0;
+    private static int score = 0;
 
+    public static TMP_Text scoreObj;
     public TMP_Text mode;
     public GameObject explosion;
     public GameObject GameOverModal;
@@ -20,19 +22,28 @@ public class GameManager : MonoBehaviour
 
     private FetchHandData handDataScript;
     private int curHandType;
+    
+
 
     private void Awake()
     {
+        Debug.Log("Awake");
+        score = 0;
+        scoreObj = GameObject.Find("Score").GetComponent<TMP_Text>();
+        chance = 3;
+        collectedBomb = 0;
         explosion.SetActive(false);
         GameOverModal.SetActive(false);
+        isPlaying = true;
+        isGameOver = false;
+        isSliceMode = true;
+        handDataScript = this.gameObject.GetComponent<FetchHandData>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        isPlaying = true;
-        isGameOver = false;
-        handDataScript = this.gameObject.GetComponent<FetchHandData>();
+        Time.timeScale = 1;
     }
 
     // Update is called once per frame
@@ -59,6 +70,7 @@ public class GameManager : MonoBehaviour
             isSliceMode = true;
             mode.text = "Slice";
         } else {
+            Debug.Log("Grab");
             isSliceMode = false;
             mode.text = "Grab";
         }
@@ -100,7 +112,8 @@ public class GameManager : MonoBehaviour
     {
         // 폭발 효과
         explosion.SetActive(true);
-        StartCoroutine(DelayTimeAndEndGame(2));
+        GetComponent<AudioSource>().Play();
+        StartCoroutine(DelayTimeAndEndGame(1));
         Debug.Log("Game Over");
     }
 
@@ -110,8 +123,10 @@ public class GameManager : MonoBehaviour
         StopGameWithGameOverModal();
     }
 
-    private void StopGameWithGameOverModal()
+    public void StopGameWithGameOverModal()
     {
+        MuteBomb();
+        isPlaying = false;
         GameOverModal.SetActive(true);
         Time.timeScale = 0;
     }
@@ -121,16 +136,34 @@ public class GameManager : MonoBehaviour
         switch (chance) {
             case 2:
                 failIcons[0].material = null;
+                failIcons[0].GetComponent<AudioSource>().Play();
                 break;
             case 1:
                 failIcons[1].material = null;
+                failIcons[1].GetComponent<AudioSource>().Play();
                 break;
             case 0:
                 failIcons[2].material = null;
+                failIcons[2].GetComponent<AudioSource>().Play();
                 break;
             default:
                 break;
                 
         }
+    }
+
+    private void MuteBomb()
+    {
+        GameObject[] bombs = GameObject.FindGameObjectsWithTag("bomb");
+        foreach (GameObject bomb in bombs)
+        {
+            bomb.GetComponent<AudioSource>().Stop();
+        }
+    }
+
+    public static void IncreaseScore()
+    {
+        score += 10;
+        scoreObj.text = score.ToString();
     }
 }
