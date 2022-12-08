@@ -41,12 +41,17 @@ public class FetchHandData : MonoBehaviour
             }
             else
             {
-                Debug.Log("Get Request Success");
+                // Debug.Log("Get Request Success");
                 List<object> handCoord = (List<object>) (Json.Deserialize(request.downloadHandler.text) as Dictionary<string, object>)["hand_coor"];
                 handPos.x = (float)Convert.ToDouble(handCoord[0]);
                 handPos.y = (float)Convert.ToDouble(handCoord[1]);
                 resize();
                 handPos = Camera.main.ScreenToWorldPoint(new Vector3(handPos.x, handPos.y, 20));
+
+                HandData data = JsonUtility.FromJson<HandData>(request.downloadHandler.text);
+                // Debug.Log(data.hand_type);
+                handType = data.hand_type;
+
             }
         }
         yield return new WaitForSeconds(1/frequency);
@@ -58,4 +63,12 @@ public class FetchHandData : MonoBehaviour
         handPos.y = width * (1-handPos.y);
         // Debug.Log("resized handPos x = " + handPos.x + " y = " + handPos.y);
     }
+
+    [Serializable]
+    public class HandData
+    {
+        public float[] hand_coor;
+        public int hand_type;
+    }
+
 }
