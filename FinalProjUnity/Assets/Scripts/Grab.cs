@@ -9,6 +9,7 @@ public class Grab : MonoBehaviour
     private void Awake()
     {
         handDataScript = GameObject.Find("GameManager").GetComponent<FetchHandData>();
+        this.enabled = false;
     }
 
     // Start is called before the first frame update
@@ -20,6 +21,23 @@ public class Grab : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = handDataScript.handPos;
+        if (!GameManager.isSliceMode)
+        {
+            this.enabled = true;
+            transform.position = handDataScript.handPos;
+        } else
+        {
+            this.enabled = false;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!GameManager.isSliceMode)
+        {
+            Debug.Log("grabbed an object");
+            other.transform.position = this.transform.position;
+            // other rigid body 없애주기?
+        }
     }
 }

@@ -15,10 +15,16 @@ public class Slice : MonoBehaviour
 
     private FetchHandData handDataScript;
 
-    private void Start()
+    private void Awake()
     {
+        this.enabled = true;
         handDataScript = GameObject.Find("GameManager").GetComponent<FetchHandData>();
         sliceCollider = GetComponent<Collider>();
+    }
+
+    private void Start()
+    {
+        
         Debug.Log(sliceCollider.enabled);
     }
 
@@ -42,10 +48,10 @@ public class Slice : MonoBehaviour
                 StartSlicing();
             }
             // StopSlicing doesn't happen
-            if (isSlicing)
-            {
-                ContinueSlicing();
-            }
+            //if (isSlicing)
+            //{
+            //    ContinueSlicing();
+            //}
         }
         else
         {
@@ -96,6 +102,7 @@ public class Slice : MonoBehaviour
         isSlicing = false;
         sliceCollider.enabled = false;
         sliceTrail.enabled = false;
+        this.enabled = false;
     }
 
     private void ContinueSlicing()
