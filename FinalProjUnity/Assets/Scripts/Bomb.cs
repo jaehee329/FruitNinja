@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bomb : MonoBehaviour
 {
     private DragDrop GrabModeScript;
+    public GameObject explosion;
 
     private void Awake()
     {
@@ -31,11 +32,10 @@ public class Bomb : MonoBehaviour
         if (GameManager.isSliceMode)
         {
             
-            if (other.CompareTag("slice"))
+            if (other.CompareTag("hand"))
             {
                 Debug.Log("slice has touched the bomb");
                 Destroy(this.gameObject);
-                other.GetComponent<AudioSource>().Play();
                 GameManager.isGameOver = true;
             }
 

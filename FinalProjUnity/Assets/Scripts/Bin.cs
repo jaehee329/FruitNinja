@@ -23,10 +23,5 @@ public class Bin : MonoBehaviour
             GameManager.collectedBomb++;
             Destroy(other.gameObject);
         }
-        else if (other.CompareTag("fruit"))
-        {
-            Debug.Log("fruit has been dumped");
-            GameManager.chance--;
-        }
     }
 }

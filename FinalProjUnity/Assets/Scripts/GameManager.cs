@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public static int chance = 3;
     public static int collectedBomb = 0;
     private static int score = 0;
+    private AudioSource failAudio;
 
     public static TMP_Text scoreObj;
     public TMP_Text mode;
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     private FetchHandData handDataScript;
     private int curHandType;
+
     
 
 
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1;
+        failAudio = failIcons[0].transform.parent.gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -54,7 +57,6 @@ public class GameManager : MonoBehaviour
         if (isGameOver)
         {
             GameOver();
-            this.enabled = false;
             return;
         }
 
@@ -67,24 +69,15 @@ public class GameManager : MonoBehaviour
         curHandType = handDataScript.handType;
         //Debug.Log("handType = " + curHandType);
         if (curHandType == 0) {
+            Debug.Log("Slice");
             isSliceMode = true;
-            mode.text = "Slice";
+            mode.text = "Slice!";
         } else {
             Debug.Log("Grab");
             isSliceMode = false;
             mode.text = "Grab";
         }
-        // Mouse Mode
-
-        // if (Input.GetKeyDown("space"))
-        // {
-        //     Debug.Log("Space bar pushed");
-        //     isSliceMode = !isSliceMode;
-        //     if (isSliceMode)
-        //         mode.text = "Slice";
-        //     else
-        //         mode.text = "Grab";
-        // }
+       
     }
 
     public static void MoveScene(int sceneIdx)
@@ -97,6 +90,7 @@ public class GameManager : MonoBehaviour
         if (other.CompareTag("fruit"))
         {
             chance--;
+            failAudio.Play();
             Destroy(other.gameObject);
         }
         if (other.CompareTag("bomb"))
@@ -112,7 +106,6 @@ public class GameManager : MonoBehaviour
     {
         // 폭발 효과
         explosion.SetActive(true);
-        GetComponent<AudioSource>().Play();
         StartCoroutine(DelayTimeAndEndGame(1));
         Debug.Log("Game Over");
     }
@@ -136,15 +129,12 @@ public class GameManager : MonoBehaviour
         switch (chance) {
             case 2:
                 failIcons[0].material = null;
-                failIcons[0].GetComponent<AudioSource>().Play();
                 break;
             case 1:
                 failIcons[1].material = null;
-                failIcons[1].GetComponent<AudioSource>().Play();
                 break;
             case 0:
                 failIcons[2].material = null;
-                failIcons[2].GetComponent<AudioSource>().Play();
                 break;
             default:
                 break;

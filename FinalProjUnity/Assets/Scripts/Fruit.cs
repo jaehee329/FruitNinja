@@ -10,16 +10,13 @@ public class Fruit : MonoBehaviour
 
     private Rigidbody fruitRigidBody;
     private Collider fruitCollider;
-    private DragDrop GrabModeScript;
     private Fruit SliceModeScript;
 
     private void Awake()
     {
         fruitRigidBody = GetComponent<Rigidbody>();
         fruitCollider = GetComponent<Collider>();
-        //GrabModeScript = gameObject.GetComponent<DragDrop>();
         SliceModeScript = gameObject.GetComponent<Fruit>();
-        //GrabModeScript.enabled = false;
         SliceModeScript.enabled = true;
     }
 
@@ -28,12 +25,11 @@ public class Fruit : MonoBehaviour
         if (!GameManager.isSliceMode)
         {
             // Grab mode 일 때
-            //GrabModeScript.enabled = true;
             SliceModeScript.enabled = false;
         }
         else
         {
-            // Slice mode 일 땡
+            // Slice mode 일 때
             SliceModeScript.enabled = true;
         }
     }
@@ -55,19 +51,35 @@ public class Fruit : MonoBehaviour
             slice.AddForceAtPosition(direction * force, contactPoint, ForceMode.Impulse);
         }
         GetComponent<AudioSource>().Play();
-        GameManager.IncreaseScore();
+        if (SceneManager.GetActiveScene().name.Equals("Game"))
+        {
+            GameManager.IncreaseScore();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("slice"))
+        if (other.CompareTag("hand"))
         {
-            Slice slice = other.GetComponent<Slice>();
-            Slice(slice.Direction, slice.transform.position, slice.sliceForce);
-            if (SceneManager.GetActiveScene().buildIndex == 0)
+            if (GameManager.isSliceMode)
             {
-                Invoke("MoveToHowToScene", 1.5f);
+                Debug.Log("slice fruit");
+                Slice slice = other.GetComponent<Slice>();
+                Slice(slice.Direction, slice.transform.position, slice.sliceForce);
+                if (SceneManager.GetActiveScene().buildIndex == 0)
+                {
+                    Invoke("MoveToHowToScene", 1.5f);
+                }
             }
+            else
+            {
+                if (!GameManager.isSliceMode)
+                {
+                    Debug.Log("Grab mode + grab object has grabbed the fruit");
+                    // update fruit position according to the grab object's position
+                }
+            }
+            
         }
 
         if (other.CompareTag("DropArea"))
@@ -80,15 +92,11 @@ public class Fruit : MonoBehaviour
                 Destroy(this.gameObject, 3f);
             }
         }
-        if (other.CompareTag("grab"))
-        {
-            if (!GameManager.isSliceMode)
-            {
-                Debug.Log("Grab mode + grab object has grabbed the fruit");
-                // update fruit position according to the grab object's position
-            }
-        }
-            
+        //if (other.CompareTag("grab"))
+        //{
+
+        //}
+
     }
 
     private void MoveToHowToScene()

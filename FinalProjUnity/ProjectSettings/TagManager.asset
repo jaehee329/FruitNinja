@@ -11,6 +11,7 @@ TagManager:
   - DropArea
   - grab
   - bgm
+  - hand
   layers:
   - Default
   - TransparentFX
