@@ -7,7 +7,6 @@ public class Slice : MonoBehaviour
     public Camera mainCamera;
     private Collider sliceCollider;
     public TrailRenderer sliceTrail;
-    private bool isSlicing;
     public float minSliceVelocity = 0.01f;
 
     public Vector3 Direction { get; private set; }
@@ -15,33 +14,23 @@ public class Slice : MonoBehaviour
 
     private FetchHandData handDataScript;
 
-    private void Awake()
-    {
-        this.enabled = true;
-        handDataScript = GameObject.Find("GameManager").GetComponent<FetchHandData>();
-        sliceCollider = GetComponent<Collider>();
-    }
+    public GameObject blade;
+    public GameObject grab;
 
     private void Start()
     {
-        
+        transform.position = new Vector3(0f, 0f, 0f);
+        this.gameObject.SetActive(true);
+        handDataScript = GameObject.Find("GameManager").GetComponent<FetchHandData>();
+        sliceCollider = GetComponent<Collider>();
         Debug.Log(sliceCollider.enabled);
     }
 
-    //private void OnEnable()
-    //{
-    //    StopSlicing();
-    //}
-
-    //private void OnDisable()
-    //{
-    //    StopSlicing();
-    //}
-
     void Update()
     {
+        transform.position = handDataScript.handPos;
         // Hand Mode
-        if (GameManager.isSliceMode)
+        if (handDataScript.handType == 0)
         {
             if (true)
             {
@@ -53,44 +42,22 @@ public class Slice : MonoBehaviour
             //    ContinueSlicing();
             //}
         }
-        else
+        else if (handDataScript.handType == 1)
         {
             StopSlicing();
-        }
 
-        // Mouse Mode
-        // if (GameManager.isSliceMode)
-        // {
-        //     if (Input.GetMouseButtonDown(0))
-        //     {
-        //         StartSlicing();
-        //     }
-        //     else if (Input.GetMouseButtonUp(0))
-        //     {
-        //         StopSlicing();
-        //     }
-        //     else if (isSlicing)
-        //     {
-        //         ContinueSlicing();
-        //     }
-        // }
+        }
     }
 
     private void StartSlicing()
     {
-        //Debug.Log("start slicing");
         // Hand Mode
-        transform.position = handDataScript.handPos;
+        blade.SetActive(true);
+        grab.SetActive(false);
+        
         //Debug.Log("Slice.cs handPos = " + handDataScript.handPos);
 
-        // Mouse Mode
-        // Vector3 newPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        // newPos.z = 0f;
-        // Debug.Log(newPos.ToString());
-        // transform.position = newPos;
-        
 
-        isSlicing = true;
         sliceCollider.enabled = true;
         sliceTrail.enabled = true;
         //sliceTrail.Clear();
@@ -99,26 +66,11 @@ public class Slice : MonoBehaviour
     private void StopSlicing()
     {
         Debug.Log("stop slicing");
-        isSlicing = false;
-        sliceCollider.enabled = false;
-        sliceTrail.enabled = false;
-        this.enabled = false;
-    }
-
-    private void ContinueSlicing()
-    {
-        // Hand Mode
-        Vector3 newPos = handDataScript.handPos;
-        // Mouse Mode
-        // Vector3 mousePos = Input.mousePosition;
-        // mousePos.z = 21f;
-        // Vector3 newPos = mainCamera.ScreenToWorldPoint(mousePos);
-        Direction = newPos - transform.position;
-        //Debug.Log(Direction.ToString());
-
-        float velocity = Direction.magnitude / Time.deltaTime;
-        sliceCollider.enabled = velocity > minSliceVelocity;
-
-        transform.position = newPos;
+        blade.SetActive(false);
+        grab.SetActive(true);
+        //isSlicing = false;
+        //sliceCollider.enabled = false;
+        //sliceTrail.enabled = false;
+    
     }
 }
