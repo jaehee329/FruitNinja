@@ -51,7 +51,10 @@ public class Fruit : MonoBehaviour
             slice.AddForceAtPosition(direction * force, contactPoint, ForceMode.Impulse);
         }
         GetComponent<AudioSource>().Play();
-        GameManager.IncreaseScore();
+        if (SceneManager.GetActiveScene().name.Equals("Game"))
+        {
+            GameManager.IncreaseScore();
+        }
     }
 
     private void OnTriggerEnter(Collider other)

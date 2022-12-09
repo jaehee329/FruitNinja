@@ -26,6 +26,7 @@ public class Grab : MonoBehaviour
     {
         if (GameManager.isSliceMode)
         {
+            this.gameObject.GetComponent<Collider>().isTrigger = false;
             isGrabing = false;
             grabingObj = null;
         }
@@ -42,7 +43,6 @@ public class Grab : MonoBehaviour
             }
             else
             {
-                this.gameObject.GetComponent<Collider>().isTrigger = false;
                 isGrabing = false;
                 grabingObj = null;
             }
