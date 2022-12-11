@@ -8,17 +8,13 @@ using MiniJSON;
 
 public class FetchHandData : MonoBehaviour
 {
-    public float frequency = 10f;
+    public float frequency = 20f;
     public Vector3 handPos;
     public int handType;
     private string URI = "http://localhost:8000/hand";
     private bool isDelay;
     private float height = 1920f;
     private float width = 1080f;
-
-    void Start()
-    {
-    }
 
     void Update()
     {
@@ -41,7 +37,6 @@ public class FetchHandData : MonoBehaviour
             }
             else
             {
-                // Debug.Log("Get Request Success");
                 List<object> handCoord = (List<object>) (Json.Deserialize(request.downloadHandler.text) as Dictionary<string, object>)["hand_coor"];
                 handPos.x = (float)Convert.ToDouble(handCoord[0]);
                 handPos.y = (float)Convert.ToDouble(handCoord[1]);
@@ -49,7 +44,6 @@ public class FetchHandData : MonoBehaviour
                 handPos = Camera.main.ScreenToWorldPoint(new Vector3(handPos.x, handPos.y, 20));
 
                 HandData data = JsonUtility.FromJson<HandData>(request.downloadHandler.text);
-                // Debug.Log(data.hand_type);
                 handType = data.hand_type;
 
             }
@@ -61,7 +55,6 @@ public class FetchHandData : MonoBehaviour
     private void resize() {
         handPos.x = height * (1-handPos.x);
         handPos.y = width * (1-handPos.y);
-        // Debug.Log("resized handPos x = " + handPos.x + " y = " + handPos.y);
     }
 
     [Serializable]
