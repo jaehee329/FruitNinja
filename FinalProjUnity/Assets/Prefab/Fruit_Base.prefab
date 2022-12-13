@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 309379968692255119}
   - component: {fileID: 6374152450579236642}
   - component: {fileID: 1526097630045942340}
-  - component: {fileID: 752520198451220535}
   m_Layer: 0
   m_Name: Fruit_Base
   m_TagString: Untagged
@@ -80,19 +79,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whole: {fileID: 1136216349852441647}
   sliced: {fileID: 1136216349601245929}
---- !u!114 &752520198451220535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 217807832800905503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcac805aa520d4cd9bee0a3d3048209b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destinationTag: DropArea
 --- !u!1001 &217807832776710072
 PrefabInstance:
   m_ObjectHideFlags: 0

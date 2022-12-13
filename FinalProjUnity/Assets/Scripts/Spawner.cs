@@ -58,7 +58,7 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator SpawnBomb()
     {
-        // initial delay - enable the below line 
+        // initial delay 
         yield return new WaitForSeconds(minBombSpawnDelay);
 
         while (enabled)
