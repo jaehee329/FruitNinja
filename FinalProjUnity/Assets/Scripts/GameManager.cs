@@ -24,9 +24,6 @@ public class GameManager : MonoBehaviour
     private FetchHandData handDataScript;
     private int curHandType;
 
-    
-
-
     private void Awake()
     {
         Debug.Log("Awake");
@@ -42,14 +39,12 @@ public class GameManager : MonoBehaviour
         handDataScript = this.gameObject.GetComponent<FetchHandData>();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 1;
         failAudio = failIcons[0].transform.parent.gameObject.GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         CheckChance();
@@ -65,15 +60,12 @@ public class GameManager : MonoBehaviour
             StopGameWithGameOverModal();
         }
 
-        // Hand Mode
         curHandType = handDataScript.handType;
-        //Debug.Log("handType = " + curHandType);
+
         if (curHandType == 0) {
-            Debug.Log("Slice");
             isSliceMode = true;
             mode.text = "Slice!";
         } else {
-            Debug.Log("Grab");
             isSliceMode = false;
             mode.text = "Grab";
         }
@@ -96,7 +88,6 @@ public class GameManager : MonoBehaviour
         if (other.CompareTag("bomb"))
         {
             Destroy(other.gameObject);
-            Debug.Log("bomb has touched the floor");
             isGameOver = true;
             
         }

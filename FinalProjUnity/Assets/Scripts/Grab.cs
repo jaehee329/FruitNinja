@@ -8,11 +8,6 @@ public class Grab : MonoBehaviour
     private bool isGrabing;
     private Collider grabingObj;
 
-    private void Awake()
-    {
-        
-    }
-
     void Start()
     {
         handDataScript = GameObject.Find("GameManager").GetComponent<FetchHandData>();
@@ -47,7 +42,6 @@ public class Grab : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("grabbed an object");
         if (other.CompareTag("fruit") || other.CompareTag("bomb"))
         {
             if (!GameManager.isSliceMode)

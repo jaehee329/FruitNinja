@@ -5123,7 +5123,6 @@ GameObject:
   - component: {fileID: 175090684425589843}
   - component: {fileID: 7424246967693360240}
   - component: {fileID: 4530877624641271309}
-  - component: {fileID: 3405866486228570937}
   - component: {fileID: 5270898823024529973}
   m_Layer: 0
   m_Name: Bomb
@@ -5191,19 +5190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9312d951263c4d6ea8958e59d5fbcf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3405866486228570937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4873211286935612171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcac805aa520d4cd9bee0a3d3048209b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destinationTag: DropArea
+  explosion: {fileID: 0}
 --- !u!82 &5270898823024529973
 AudioSource:
   m_ObjectHideFlags: 0

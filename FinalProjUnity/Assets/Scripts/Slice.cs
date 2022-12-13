@@ -10,7 +10,7 @@ public class Slice : MonoBehaviour
     public float minSliceVelocity = 0.01f;
 
     public Vector3 Direction { get; private set; }
-    public float sliceForce = 5f;
+    public float sliceForce;
 
     private FetchHandData handDataScript;
 
@@ -27,6 +27,7 @@ public class Slice : MonoBehaviour
 
     void Update()
     {
+        Direction = handDataScript.handPos - transform.position;
         transform.position = handDataScript.handPos;
 
         if (handDataScript.handType == 0)
@@ -36,7 +37,6 @@ public class Slice : MonoBehaviour
         else if (handDataScript.handType == 1)
         {
             StopSlicing();
-
         }
     }
 
@@ -53,5 +53,8 @@ public class Slice : MonoBehaviour
     {
         blade.SetActive(false);
         grab.SetActive(true);
+
+        sliceCollider.enabled = false;
+        sliceTrail.enabled = false;
     }
 }

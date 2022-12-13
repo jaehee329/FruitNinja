@@ -36,6 +36,7 @@ public class Fruit : MonoBehaviour
 
     private void Slice(Vector3 direction, Vector3 contactPoint, float force)
     {
+        Debug.Log(direction);
         whole.SetActive(false);
         sliced.SetActive(true);
 
@@ -71,15 +72,6 @@ public class Fruit : MonoBehaviour
                     Invoke("MoveToHowToScene", 1.5f);
                 }
             }
-            else
-            {
-                if (!GameManager.isSliceMode)
-                {
-                    Debug.Log("Grab mode + grab object has grabbed the fruit");
-                    // update fruit position according to the grab object's position
-                }
-            }
-            
         }
 
         if (other.CompareTag("DropArea"))
@@ -92,11 +84,6 @@ public class Fruit : MonoBehaviour
                 Destroy(this.gameObject, 3f);
             }
         }
-        //if (other.CompareTag("grab"))
-        //{
-
-        //}
-
     }
 
     private void MoveToHowToScene()
