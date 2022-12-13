@@ -4,28 +4,7 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    private DragDrop GrabModeScript;
     public GameObject explosion;
-
-    private void Awake()
-    {
-        GrabModeScript = gameObject.GetComponent<DragDrop>();
-        GrabModeScript.enabled = false;
-    }
-
-    private void Update()
-    {
-        if (!GameManager.isSliceMode)
-        {
-            // Grab mode 일 때
-            GrabModeScript.enabled = true;
-        }
-        else
-        {
-            // Slice mode 일 땡
-            GrabModeScript.enabled = false;
-        }
-    }
 
     private void OnTriggerEnter(Collider other)
     {

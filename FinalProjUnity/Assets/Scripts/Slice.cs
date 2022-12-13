@@ -23,24 +23,15 @@ public class Slice : MonoBehaviour
         this.gameObject.SetActive(true);
         handDataScript = GameObject.Find("GameManager").GetComponent<FetchHandData>();
         sliceCollider = GetComponent<Collider>();
-        Debug.Log(sliceCollider.enabled);
     }
 
     void Update()
     {
         transform.position = handDataScript.handPos;
-        // Hand Mode
+
         if (handDataScript.handType == 0)
         {
-            if (true)
-            {
-                StartSlicing();
-            }
-            // StopSlicing doesn't happen
-            //if (isSlicing)
-            //{
-            //    ContinueSlicing();
-            //}
+            StartSlicing();
         }
         else if (handDataScript.handType == 1)
         {
@@ -51,26 +42,16 @@ public class Slice : MonoBehaviour
 
     private void StartSlicing()
     {
-        // Hand Mode
         blade.SetActive(true);
         grab.SetActive(false);
         
-        //Debug.Log("Slice.cs handPos = " + handDataScript.handPos);
-
-
         sliceCollider.enabled = true;
         sliceTrail.enabled = true;
-        //sliceTrail.Clear();
     }
 
     private void StopSlicing()
     {
-        Debug.Log("stop slicing");
         blade.SetActive(false);
         grab.SetActive(true);
-        //isSlicing = false;
-        //sliceCollider.enabled = false;
-        //sliceTrail.enabled = false;
-    
     }
 }
