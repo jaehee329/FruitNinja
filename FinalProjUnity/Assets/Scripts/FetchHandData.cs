@@ -36,8 +36,8 @@ public class FetchHandData : MonoBehaviour
             yield return request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
             {
-                //Debug.Log("Get Request Failure");
-                //Debug.Log(request.error);
+                Debug.Log("Get Request Failure");
+                Debug.Log(request.error);
             }
             else
             {
@@ -61,7 +61,6 @@ public class FetchHandData : MonoBehaviour
     private void resize() {
         handPos.x = height * (1-handPos.x);
         handPos.y = width * (1-handPos.y);
-        // Debug.Log("resized handPos x = " + handPos.x + " y = " + handPos.y);
     }
 
     [Serializable]
