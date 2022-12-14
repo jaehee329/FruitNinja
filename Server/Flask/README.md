@@ -30,8 +30,10 @@ NOTE: requires camera access to run
   `pip isntall -r requirements.txt`
 1. start redis
   `docker run --name=redis-devel --publish=6379:6379 --hostname=redis --restart=on-failure --detach redis:latest`
-1. start server
+1. start Flask server
   `python3 main.py`
+1. start MediaPipe server
+  `python3 mediapipe-server.py`
 
 
 
