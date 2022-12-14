@@ -27,6 +27,6 @@ Fruit Ninja 게임을 오마주, 웹캠을 통해 손의 좌표와 형태를 인
 <br>
 
 ## How To Run  
-1. Unity: Load `FinalProjUnity` from Unity
+1. Unity: Load folder `FinalProjUnity` from Unity
 2. Server: [here](./Server/Flask/README.md)
 
